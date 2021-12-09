@@ -6,12 +6,12 @@ import {
   REQUEST_TOKEN_URL,
   LOGIN_URL,
   SESSION_ID_URL,
-} from './config';
+} from "./config";
 
 const defaultConfig = {
-  method: 'POST',
+  method: "POST",
   headers: {
-    'Content-Type': 'application/json',
+    "Content-Type": "application/json",
   },
 };
 
@@ -58,6 +58,18 @@ const API = {
       ).json();
       return sessionId;
     }
+  },
+  rateMovie: async (sessionId, movieId, value) => {
+    const endpoint = `${API_URL}movie/${movieId}/rating?api_key=${API_KEY}&session_id=${sessionId}`;
+
+    const rating = await (
+      await fetch(endpoint, {
+        ...defaultConfig,
+        body: JSON.stringify({ value }),
+      })
+    ).json();
+
+    return rating;
   },
 };
 
